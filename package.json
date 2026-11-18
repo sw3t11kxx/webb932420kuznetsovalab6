@@ -1,0 +1,17 @@
+{
+  "name": "kuznetsova-lab6",
+  "version": "1.0.0",
+  "description": "Лабораторная работа №6: сервер на Express и PWA (вариант 18, статистика посещений)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Кузнецова Светлана",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
