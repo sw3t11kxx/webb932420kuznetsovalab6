@@ -1,0 +1,612 @@
+/* ===== CSS-переменные =====
+   Контраст (WCAG, требование ЛР3 — не ниже 4.5:1):
+   --color-text   на --color-bg     ~16:1
+   --color-text   на --color-panel  ~14:1
+   --color-muted  на --color-panel  ~8:1
+   --color-accent на --color-panel  ~11.8:1
+   --color-bg     на --color-accent ~13:1 (кнопка, бейдж)       */
+:root {
+	--color-bg: #0a0e27;          /* основной тёмно-синий */
+	--color-panel: #121a3a;       /* панели */
+	--color-accent: #ffd166;      /* золотой акцент */
+	--color-accent-dark: #e0a800;
+	--color-text: #e6ecff;        /* светлый текст */
+	--color-muted: #a9b4d6;       /* второстепенный текст */
+	--color-border: #1c2a52;
+	--color-link-hover: #fff3c4;
+	--color-visited: #c9a227;
+	--color-flash: #fff3c4;
+	--color-section-hover: rgba(28, 42, 82, 0.6);
+
+	--font-main: Arial, sans-serif;
+	--font-heading: "Trebuchet MS", Arial, sans-serif;
+
+	--radius: 4px;
+	--gap: 15px;
+	--transition: 0.3s ease;
+}
+
+/* ===== ЛР5. Темы: класс theme-dark / theme-light у <body> =====
+   Светлая тема (контраст ≥ 4.5:1):
+   --color-text   на --color-panel ~17:1
+   --color-muted  на --color-bg    ~6.9:1
+   --color-accent на --color-panel ~6.3:1
+   --color-bg     на --color-accent ~5.6:1 (кнопки, бейдж)
+   --color-visited на --color-panel ~7.4:1 */
+.theme-dark {
+	--color-bg: #0a0e27;
+	--color-panel: #121a3a;
+	--color-accent: #ffd166;
+	--color-accent-dark: #e0a800;
+	--color-text: #e6ecff;
+	--color-muted: #a9b4d6;
+	--color-border: #1c2a52;
+	--color-link-hover: #fff3c4;
+	--color-visited: #c9a227;
+	--color-flash: #fff3c4;
+	--color-section-hover: rgba(28, 42, 82, 0.6);
+}
+
+.theme-light {
+	--color-bg: #eef1fb;
+	--color-panel: #ffffff;
+	--color-accent: #8a5300;
+	--color-accent-dark: #6b4000;
+	--color-text: #121833;
+	--color-muted: #46507a;
+	--color-border: #c3cbe8;
+	--color-link-hover: #4a2c00;
+	--color-visited: #6b3fa0;
+	--color-flash: #ffe9b0;
+	--color-section-hover: rgba(195, 203, 232, 0.5);
+}
+
+/* В светлой теме звёздное небо скрыто */
+.theme-light .stars,
+.theme-light .star-field {
+	display: none;
+}
+
+/* Плавная смена темы */
+body,
+header,
+nav,
+section,
+aside,
+footer,
+.card,
+.fact {
+	transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+/* ===== Базовые стили =====
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: var(--font-main);
+	margin: 20px;
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	position: relative;
+	min-height: 100vh;
+	overflow-x: hidden;
+	line-height: 1.5;
+}
+
+h1, h2, h3 {
+	font-family: var(--font-heading);
+	color: var(--color-accent);
+	overflow-wrap: anywhere;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* ===== Позиционирование ===== */
+
+/* relative + absolute: header — relative */
+header {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px var(--gap);
+	background-color: var(--color-panel);
+	color: var(--color-accent);
+	padding: 15px;
+	border: 1px solid var(--color-border);
+	z-index: 2;
+}
+
+header h1 {
+	margin: 0 0 5px;
+}
+
+/* static — обычный поток, задан явно для наглядности */
+header p {
+	position: static;
+	margin: 0;
+	color: var(--color-text);
+}
+
+main {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--gap);
+	align-items: flex-start;
+	margin-top: var(--gap);
+	position: relative;
+	z-index: 2;
+}
+
+.content {
+	flex: 1 1 500px;
+	min-width: 0;
+}
+
+aside {
+	flex: 0 0 220px;
+	order: 2;
+	padding: 10px;
+	background-color: var(--color-panel);
+	color: var(--color-text);
+	border: 1px solid var(--color-accent);
+	position: relative;
+}
+
+section {
+	background-color: var(--color-panel);
+	padding: 10px;
+	margin-bottom: var(--gap);
+	border: 1px solid var(--color-border);
+	position: relative;
+	z-index: 2;
+	transition: background-color var(--transition);
+}
+
+footer {
+	background-color: var(--color-panel);
+	color: var(--color-accent);
+	padding: 10px;
+	text-align: center;
+	border: 1px solid var(--color-border);
+	margin-top: var(--gap);
+	position: relative;
+	z-index: 2;
+}
+
+/* ===== ЛР3. Flexbox: адаптивное горизонтальное меню ===== */
+nav {
+	position: relative;
+	z-index: 2;
+	margin-top: var(--gap);
+	background-color: var(--color-panel);
+	border: 1px solid var(--color-border);
+}
+
+.nav-list {
+	display: flex;                /* горизонтальное меню */
+	flex-wrap: wrap;              /* не вылезает за экран */
+	justify-content: center;
+	gap: 5px 10px;
+	list-style: none;
+	margin: 0;
+	padding: 5px;
+}
+
+.nav-list li {
+	flex: 1 1 auto;
+	text-align: center;
+}
+
+.nav-list a {
+	display: block;
+	padding: 8px 12px;
+	border-radius: var(--radius);
+}
+
+/* ===== ЛР3. Блок на всю ширину под карточки и дашборд ===== */
+.wide {
+	flex: 1 1 100%;
+	min-width: 0;
+}
+
+/* ===== ЛР3. Flexbox: карточки (3 в ряд на десктопе) ===== */
+.cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--gap);
+}
+
+.card {
+	flex: 0 0 calc((100% - 2 * var(--gap)) / 3);
+	min-width: 0;
+	padding: 12px;
+	background-color: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+}
+
+.card h3 {
+	margin: 0 0 8px;
+	font-size: 1.1em;
+}
+
+.card dl {
+	margin: 0;
+}
+
+.card dl div {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 4px 0;
+	border-top: 1px solid var(--color-border);
+}
+
+.card dt {
+	color: var(--color-muted);
+}
+
+.card dd {
+	margin: 0;
+	text-align: right;
+}
+
+.card dl div:last-child dd {
+	color: var(--color-accent);
+	font-weight: bold;
+}
+
+.note {
+	margin: 10px 0 0;
+	color: var(--color-muted);
+}
+
+/* ===== ЛР3. Grid: дашборд «Космические факты» (3 колонки на десктопе) ===== */
+.dashboard {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--gap);
+}
+
+.fact {
+	min-width: 0;
+	padding: 12px;
+	background-color: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+}
+
+.fact p {
+	margin: 0;
+}
+
+.fact-icon {
+	display: block;
+	font-size: 2em;
+	line-height: 1;
+	margin-bottom: 8px;
+}
+
+.fact-number {
+	font-family: var(--font-heading);
+	font-size: 1.6em;
+	font-weight: bold;
+	color: var(--color-accent);
+	overflow-wrap: anywhere;
+}
+
+/* ===== Аватар: контейнер relative, бейдж absolute ===== */
+.photo-wrapper {
+	position: relative;
+	display: inline-block;
+	max-width: 100%;
+	margin-bottom: var(--gap);
+}
+
+.avatar {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+.badge {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	background-color: var(--color-accent);
+	color: var(--color-bg);
+	font-size: 12px;
+	font-weight: bold;
+	padding: 4px 8px;
+	border-radius: var(--radius);
+}
+
+/* ===== ЛР5. Панель кнопок и скрытие блока ===== */
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: var(--gap);
+}
+
+/* Скрытие/показ: класс добавляется/снимается скриптом */
+.hidden {
+	display: none !important;
+}
+
+.btn-secondary {
+	background-color: transparent;
+	color: var(--color-accent);
+	border: 2px solid var(--color-accent);
+}
+
+.btn-secondary:hover {
+	background-color: var(--color-accent);
+	color: var(--color-bg);
+}
+
+.delete-btn {
+	margin-top: 10px;
+	padding: 6px 12px;
+}
+
+/* ===== Форма ===== */
+input,
+textarea {
+	display: block;
+	width: 90%;
+	max-width: 100%;
+	margin: 5px 0 10px;
+	padding: 6px;
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius);
+	font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--color-muted);
+	opacity: 1;
+}
+
+input:focus,
+textarea:focus {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+	border-color: var(--color-accent);
+	box-shadow: 0 0 8px rgba(255, 209, 102, 0.6);
+}
+
+button {
+	background-color: var(--color-accent);
+	color: var(--color-bg);
+	border: none;
+	padding: 8px 16px;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius: var(--radius);
+	transition: transform var(--transition), background-color var(--transition);
+}
+
+button:hover {
+	background-color: var(--color-accent-dark);
+	transform: translateY(-2px);
+}
+
+/* :focus кнопки — заметная обводка (замечание 3) */
+button:focus {
+	outline: 3px solid var(--color-text);
+	outline-offset: 3px;
+}
+
+/* :active — эффект «вспышки» */
+button:active {
+	transform: scale(0.95);
+	box-shadow: 0 0 20px 6px var(--color-accent),
+	            0 0 40px 12px rgba(255, 209, 102, 0.5);
+	background-color: var(--color-flash);
+}
+
+/* ===== Ссылки ===== */
+a {
+	color: var(--color-accent);
+	text-decoration: none;
+	transition: color var(--transition);
+}
+
+a:hover {
+	color: var(--color-link-hover);
+	text-decoration: underline;
+}
+
+/* :focus ссылок — заметная обводка (замечание 3) */
+a:focus {
+	outline: 3px solid var(--color-text);
+	outline-offset: 3px;
+	text-decoration: underline;
+}
+
+a:active {
+	color: var(--color-accent-dark);
+}
+
+a:visited {
+	color: var(--color-visited);
+}
+
+/* ===== Звёздное небо: псевдоэлементы ===== */
+.stars {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+	z-index: 0;
+	overflow: hidden;
+	transition: opacity 0.6s ease;
+}
+
+.stars::before,
+.stars::after {
+	content: "";
+	position: absolute;
+	top: -50%;
+	right: -50%;
+	bottom: -50%;
+	left: -50%;
+	background-repeat: repeat;
+	background-image:
+		radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+		radial-gradient(1px 1px at 120px 80px, #ffd166, transparent),
+		radial-gradient(1.5px 1.5px at 220px 150px, #ffffff, transparent),
+		radial-gradient(1px 1px at 320px 60px, #cfe1ff, transparent),
+		radial-gradient(2px 2px at 420px 200px, #ffd166, transparent),
+		radial-gradient(1px 1px at 520px 120px, #ffffff, transparent);
+	background-size: 600px 300px;
+	opacity: 0.8;
+	animation: twinkle-bg 6s infinite ease-in-out alternate;
+	transition: transform 0.6s ease;
+}
+
+.stars::after {
+	background-size: 400px 400px;
+	opacity: 0.5;
+	animation-duration: 9s;
+	animation-delay: -3s;
+}
+
+/* Мерцание фона — отдельная анимация (замечание 4) */
+@keyframes twinkle-bg {
+	0%   { opacity: 0.25; }
+	50%  { opacity: 0.9; }
+	100% { opacity: 0.35; }
+}
+
+/* ===== Мелкие div-звёзды с мерцанием =====
+   Контейнер на весь экран: fixed + top/right/bottom/left.
+   Inline-стиль в HTML больше не меняет position (замечание 1) */
+.star-field {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+	z-index: 1;
+	transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.star {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	background-color: #ffffff;
+	border-radius: 50%;
+	box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8);
+	animation: twinkle-star 3s infinite ease-in-out;
+}
+
+/* Мерцание div-звёзд — своя анимация (замечание 4) */
+@keyframes twinkle-star {
+	0%, 100% { opacity: 0.3; }
+	50%      { opacity: 1; }
+}
+
+.star-1 { top: 8%;  left: 12%; animation-delay: 0s;   }
+.star-2 { top: 20%; left: 75%; animation-delay: 0.4s; background-color: var(--color-accent); }
+.star-3 { top: 35%; left: 40%; animation-delay: 0.8s; }
+.star-4 { top: 55%; left: 85%; animation-delay: 1.2s; background-color: var(--color-accent); }
+.star-5 { top: 70%; left: 20%; animation-delay: 1.6s; }
+.star-6 { top: 80%; left: 60%; animation-delay: 2.0s; background-color: var(--color-accent); }
+.star-7 { top: 45%; left: 5%;  animation-delay: 2.4s; }
+.star-8 { top: 15%; left: 50%; animation-delay: 2.8s; }
+
+/* ===== :hover на секции «Проекты» (замечание 2) =====
+   .stars и .star-field не соседи #projects, поэтому используем :has() на body.
+   Меняем opacity родителя (он умножается на анимированную opacity слоёв,
+   поэтому анимация его не перекрывает) и раздвигаем звёзды через scale. */
+body:has(#projects:hover) .stars {
+	opacity: 0.3;
+}
+
+body:has(#projects:hover) .stars::before,
+body:has(#projects:hover) .stars::after {
+	transform: scale(1.4);
+}
+
+body:has(#projects:hover) .star-field {
+	opacity: 0.4;
+	transform: scale(1.15);
+}
+
+#projects:hover {
+	background-color: var(--color-section-hover);
+}
+
+/* ===== Адаптив ===== */
+
+/* Планшеты: до 1023px — карточки по 2, Grid в 2 колонки */
+@media (max-width: 1023px) {
+	.card {
+		flex-basis: calc((100% - var(--gap)) / 2);
+	}
+
+	.dashboard {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	/* третий блок на всю ширину — без пустой ячейки */
+	.fact:last-child {
+		grid-column: 1 / -1;
+	}
+}
+
+/* Узкие экраны: боковая панель над содержимым */
+@media (max-width: 700px) {
+	aside {
+		flex: 1 1 100%;
+		order: 0;
+	}
+}
+
+/* Мобильные: до 599px — карточки по 1, Grid в 1 колонку, меню столбиком */
+@media (max-width: 599px) {
+	body {
+		margin: 10px;
+	}
+
+	.card {
+		flex-basis: 100%;
+	}
+
+	.dashboard {
+		grid-template-columns: 1fr;
+	}
+
+	.fact:last-child {
+		grid-column: auto;
+	}
+
+	.nav-list {
+		flex-direction: column;
+	}
+}
+
+/* Меньше анимации по настройке системы */
+@media (prefers-reduced-motion: reduce) {
+	.stars::before,
+	.stars::after,
+	.star {
+		animation: none;
+	}
+}

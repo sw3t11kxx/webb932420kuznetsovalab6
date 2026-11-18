@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="dark">
+	<title>О себе — Кузнецова Светлана</title>
+	<link rel="stylesheet" href="/style.css">
+
+	<!-- ЛР6: PWA -->
+	<link rel="manifest" href="/manifest.json">
+	<meta name="theme-color" content="#0a0e27">
+	<link rel="icon" href="/images/icon-192.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/icon-192.png">
+</head>
+<body class="theme-dark">
+
+	<div class="stars"></div>
+
+	<header id="top">
+		<div class="header-text">
+			<h1>О себе</h1>
+			<p>Кузнецова Светлана — космический энтузиаст и астроном-любитель</p>
+		</div>
+	</header>
+
+	<nav aria-label="Основное меню">
+		<ul class="nav-list">
+			<li><a href="/">Главная</a></li>
+			<li><a href="/about">О себе</a></li>
+			<li><a href="/api/stats">Статистика (JSON)</a></li>
+		</ul>
+	</nav>
+
+	<main>
+		<div class="content">
+			<section aria-labelledby="about-title">
+				<h2 id="about-title">Кто я</h2>
+				<p>Я наблюдаю за ночным небом и изучаю космос. Любимое созвездие — Орион: в нём находится туманность M42, видимая даже невооружённым глазом.</p>
+				<p>Эта страница отдаётся маршрутом <code>GET /about</code> сервера на Express.</p>
+			</section>
+
+			<section aria-labelledby="skills-title">
+				<h2 id="skills-title">Навыки</h2>
+				<ul>
+					<li>Работа с телескопом-рефлектором</li>
+					<li>Анализ астрономических данных (Python, Astropy)</li>
+					<li>3D-моделирование космических объектов (Blender)</li>
+					<li>Спектральный анализ и фотометрия звёзд</li>
+				</ul>
+			</section>
+
+			<p><a href="/">← Вернуться на главную</a></p>
+		</div>
+	</main>
+
+	<footer>
+		<p>&copy; 2026 Кузнецова Светлана</p>
+	</footer>
+
+	<script src="/pwa.js"></script>
+</body>
+</html>
